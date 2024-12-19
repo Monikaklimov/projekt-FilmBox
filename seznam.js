@@ -103,4 +103,42 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	{
+		id: 'avatar',
+		nazev: 'Avatar',
+		plakat: {
+			url: 'https://upload.wikimedia.org/wikipedia/en/d/d6/Avatar_%282009_film%29_poster.jpg',
+			sirka: 420,
+			vyska: 937
+		}, 
+		ochutnavka: 'Avatar is a 2009 epic science fiction film co-produced, co-edited, written, and directed by James Cameron.',
+		popis: 'The cast includes Sam Worthington, Zoe Saldana, Stephen Lang, Michelle Rodriguez and Sigourney Weaver.[6] It is the first installment in the Avatar film series. It is set in the mid-22nd century, when humans are colonizing Pandora, a lush habitable moon of a gas giant in the Alpha Centauri star system, in order to mine the valuable unobtanium,[c] a room-temperature superconductor mineral. The expansion of the mining colony threatens the continued existence of a local tribe of Na\'vi, a humanoid species indigenous to Pandora. The title of the film refers to a genetically engineered Na\'vi body operated from the brain of a remotely located human that is used to interact with the natives of Pandora.',
+		premiera: '2009-12-10'
+	}
 ]
+// Získání elementu pro seznam filmů
+const seznamFilmu = document.querySelector('#seznam-filmu');
+seznamFilmu.innerHTML = '';
+
+// Projdeme každý film a přidáme HTML kód
+filmy.forEach(film => {
+	const filmCard = document.createElement('div');
+	filmCard.classList.add('col');
+	filmCard.innerHTML = `
+    <div class="card">
+      <img 
+        src=${film.plakat.url} 
+        width="780" 
+        height="520" class="card-img-top" alt="plakát" 
+        />
+      <div class="card-body">
+        <h5 class="card-title">${film.nazev}</h5>
+        <p class="card-text">${film.ochutnavka}</p>
+        <!-- Odkaz na detail filmu s ID -->
+        <a href="film.html#${film.id}" class="btn btn-primary">Přehrát</a>
+      </div>
+    </div>
+  `;
+	// Přidáme karty do seznamu
+	seznamFilmu.appendChild(filmCard);
+});

@@ -103,4 +103,141 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	{
+		id: 'avatar',
+		nazev: 'Avatar',
+		plakat: {
+			url: 'https://upload.wikimedia.org/wikipedia/en/d/d6/Avatar_%282009_film%29_poster.jpg',
+			sirka: 420,
+			vyska: 937
+		}, 
+		ochutnavka: 'Avatar is a 2009 epic science fiction film co-produced, co-edited, written, and directed by James Cameron.',
+		popis: 'The cast includes Sam Worthington, Zoe Saldana, Stephen Lang, Michelle Rodriguez and Sigourney Weaver.[6] It is the first installment in the Avatar film series. It is set in the mid-22nd century, when humans are colonizing Pandora, a lush habitable moon of a gas giant in the Alpha Centauri star system, in order to mine the valuable unobtanium,[c] a room-temperature superconductor mineral. The expansion of the mining colony threatens the continued existence of a local tribe of Na\'vi, a humanoid species indigenous to Pandora. The title of the film refers to a genetically engineered Na\'vi body operated from the brain of a remotely located human that is used to interact with the natives of Pandora.',
+		premiera: '2009-12-10'
+	}
 ]
+
+const filmID=window.location.hash.slice(1)
+const filmOtevreny=filmy.find(film => film.id === filmID);
+const obrazekFilmu=document.querySelector('#detail-filmu img')
+obrazekFilmu.src=filmOtevreny.plakat.url
+document.querySelector('.card-title').textContent=filmOtevreny.nazev
+document.querySelector('.card-text'). textContent=filmOtevreny.popis
+// Funkce pro zvýraznění určitého počtu hvězdiček
+const zvyrazniHvezdicky = pocet => {
+    // Získáme všechny prvky se třídou 'fa-star'
+    const hvezdicky = document.querySelectorAll('.fa-star');
+
+    // Projdeme všechny hvězdičky
+    hvezdicky.forEach((hvezdicka, index) => {
+        if (index < pocet) {
+            // Pokud je index menší než počet, zvýrazníme hvězdičku
+            hvezdicka.classList.remove('far'); // Odebereme nezvýrazněnou třídu
+            hvezdicka.classList.add('fas'); // Přidáme zvýrazněnou třídu
+        } else {
+            // Jinak ji nezvýrazníme
+            hvezdicka.classList.remove('fas'); // Odebereme zvýrazněnou třídu
+            hvezdicka.classList.add('far'); // Přidáme nezvýrazněnou třídu
+        }
+    });
+};
+// Přidáme všem hvězdičkám posluchač události 'click'
+document.querySelectorAll('.fa-star').forEach((hvezdicka, index) => {
+    hvezdicka.addEventListener('click', () => {
+        // Po kliknutí zavoláme funkci a předáme číslo kliknuté hvězdičky (index + 1)
+        zvyrazniHvezdicky(index + 1);
+    });
+});
+// Získáme prvek formuláře
+const noteForm = document.querySelector('#note-form');
+// Přidáme posluchač události pro odeslání formuláře
+noteForm.addEventListener('submit', event => {
+    
+    event.preventDefault();
+
+    const messageInput = document.querySelector('#message-input');
+    const termsCheckbox = document.querySelector('#terms-checkbox');
+
+    const noteDisplay = document.querySelector('#note-display');
+
+    messageInput.classList.remove('is-invalid');
+    termsCheckbox.classList.remove('is-invalid');
+
+    if (messageInput.value.trim() === '') {
+        messageInput.classList.add('is-invalid');
+        return; 
+    }
+
+    if (!termsCheckbox.checked) {
+        termsCheckbox.classList.add('is-invalid');
+        return; 
+    }
+
+    noteDisplay.innerHTML = `<p class="card-text">${messageInput.value}</p>`;
+
+    
+    messageInput.value = '';
+    termsCheckbox.checked = false;
+});
+// Přidáme posluchač události pro odeslání formuláře
+noteForm.addEventListener('submit', event => {
+    
+    event.preventDefault();
+
+    const messageInput = document.querySelector('#message-input');
+    const termsCheckbox = document.querySelector('#terms-checkbox');
+
+    const noteDisplay = document.querySelector('#note-display');
+
+    messageInput.classList.remove('is-invalid');
+    termsCheckbox.classList.remove('is-invalid');
+
+    if (messageInput.value.trim() === '') {
+        messageInput.classList.add('is-invalid');
+        return; 
+    }
+
+    if (!termsCheckbox.checked) {
+        termsCheckbox.classList.add('is-invalid');
+        return; 
+    }
+
+    noteDisplay.innerHTML = `<p class="card-text">${messageInput.value}</p>`;
+
+    
+    messageInput.value = '';
+    termsCheckbox.checked = false;
+});
+const video = document.getElementById('film-video');
+const prehravac = document.getElementById('prehravac');
+const playButton = document.querySelector('.play');
+const pauseButton = document.querySelector('.pause');
+const currentTimeDisplay = document.querySelector('.current-time');
+
+if (prehravac) {
+    playButton.addEventListener('click', () => {
+        video.play(); 
+    });
+
+    pauseButton.addEventListener('click', () => {
+        video.pause();
+    });
+
+    video.addEventListener('playing', () => {
+        
+        prehravac.classList.add('playing');
+    });
+
+    video.addEventListener('pause', () => {
+    
+        prehravac.classList.remove('playing');
+    });
+video.addEventListener('timeupdate', () => {
+        const currentTime = Math.floor(video.currentTime); // Získáme aktuální čas
+        const minutes = Math.floor(currentTime / 60); // Přepočítáme na minuty
+        const seconds = currentTime % 60; // Získáme sekundy
+        currentTimeDisplay.textContent = `${minutes}:${
+            seconds < 10 ? '0' + seconds : seconds
+        }`; // Zobrazíme čas ve formátu MM:SS
+    });
+}
